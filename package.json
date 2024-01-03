@@ -1,0 +1,19 @@
+{
+  "name": "expressapp",
+  "version": "1.0.0",
+  "description": "飲み物自動販売機アプリ",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@saku:saku2883/ExpressApp.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.18.2"
+  }
+}
