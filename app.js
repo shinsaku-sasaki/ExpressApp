@@ -1,4 +1,6 @@
 import express from "express";
+import mysql from "mysql2/promise";
+import "dotenv/config";
 const app = express();
 const port = 3000;
 
@@ -6,8 +8,16 @@ app.set("view engine", "ejs");
 
 app.use(express.static("public"));
 
-app.get("/", (req, res) => {
-  res.render("index");
+app.get("/", async (req, res) => {
+  const connection = await mysql.createConnection({
+    host: process.env.MYSQL_HOST,
+    database: process.env.MYSQL_DATABASE,
+    user: process.env.MYSQL_USER,
+    password: process.env.MYSQL_PASSWORD,
+  });
+  const sql = "SELECT * FROM drinks";
+  const result = await connection.execute(sql);
+  res.render("index", { drinks: result[0] });
 });
 
 app.get("/add", (req, res) => {
