@@ -18,52 +18,18 @@
     <main>
       <!-- 商品のリスト -->
       <ul class="products">
+        <% drinks.forEach((drink)=>{ %>
         <li class="product">
           <h2 class="product-name">
-            <a class="product-link" href="#">とってもうまいコーヒー</a>
+            <a class="product-link" href="#"><%= drink.name %></a>
           </h2>
-          <p class="product-price">¥300</p>
-          <p class="product-temperature warm">あたたかい</p>
+          <p class="product-price">¥<%= drink.price %></p>
+          <p class="product-temperature warm">
+            <%= drink.temperature ? "あたたかい" :"つめたい" %>
+          </p>
           <button>購入</button>
         </li>
-
-        <li class="product">
-          <h2 class="product-name">
-            <a class="product-link" href="#">フレッシュなオレンジジュース</a>
-          </h2>
-          <p class="product-price">¥250</p>
-          <p class="product-temperature cold">冷たい</p>
-          <button>購入</button>
-        </li>
-
-        <li class="product">
-          <h2 class="product-name">
-            <a class="product-link" href="#">爽やかなレモンティー</a>
-          </h2>
-          <p class="product-price">¥200</p>
-          <p class="product-temperature cold">冷たい</p>
-          <button>購入</button>
-        </li>
-
-        <li class="product">
-          <h2 class="product-name">
-            <a class="product-link" href="#"
-              >クリーミーなストロベリーシェイク</a
-            >
-          </h2>
-          <p class="product-price">¥350</p>
-          <p class="product-temperature cold">冷たい</p>
-          <button>購入</button>
-        </li>
-
-        <li class="product">
-          <h2 class="product-name">
-            <a class="product-link" href="#">ホットな抹茶ラテ</a>
-          </h2>
-          <p class="product-price">¥280</p>
-          <p class="product-temperature warm">あたたかい</p>
-          <button>購入</button>
-        </li>
+        <% }) %>
       </ul>
     </main>
   </body>
