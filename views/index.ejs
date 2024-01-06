@@ -24,7 +24,9 @@
             <a class="product-link" href="#"><%= drink.name %></a>
           </h2>
           <p class="product-price">¥<%= drink.price %></p>
-          <p class="product-temperature warm">
+          <p
+            class="product-temperature <%= drink.temperature ? 'warm' :'cold' %>"
+          >
             <%= drink.temperature ? "あたたかい" :"つめたい" %>
           </p>
           <button>購入</button>
