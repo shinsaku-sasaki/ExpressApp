@@ -1,5 +1,6 @@
 import express from "express";
 import mysql from "mysql2/promise";
+import bodyParser from "body-parser";
 import "dotenv/config";
 const app = express();
 const port = 3000;
@@ -7,6 +8,8 @@ const port = 3000;
 app.set("view engine", "ejs");
 
 app.use(express.static("public"));
+
+app.use(bodyParser.urlencoded({ extended: false }));
 
 app.get("/", async (req, res) => {
   const connection = await mysql.createConnection({
@@ -22,6 +25,11 @@ app.get("/", async (req, res) => {
 
 app.get("/add", (req, res) => {
   res.render("add");
+});
+
+app.post("/add", (req, res) => {
+  console.log(req.body);
+  res.redirect("/");
 });
 
 app.get("/update", (req, res) => {
