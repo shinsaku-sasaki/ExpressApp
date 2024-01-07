@@ -24,11 +24,29 @@ app.get("/", async (req, res) => {
 });
 
 app.get("/add", (req, res) => {
-  res.render("add");
+  const errors = {
+    name: [],
+    price: [],
+    temp: [],
+  };
+  res.render("add", { errors: errors });
 });
 
 app.post("/add", (req, res) => {
-  console.log(req.body);
+  const errors = {
+    name: [],
+    price: [],
+    temp: [],
+  };
+  if (!req.body.name.trim()) {
+    errors.name.push("商品名は必須です。");
+  }
+  if (req.body.name.length > 20) {
+    errors.name.push("商品名は20文字以内です。");
+  }
+  if (errors.name.length) {
+    return res.render("add", { errors: errors });
+  }
   res.redirect("/");
 });
 
