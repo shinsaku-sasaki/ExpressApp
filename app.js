@@ -69,8 +69,57 @@ app.post("/add", async (req, res) => {
   res.redirect("/");
 });
 
-app.get("/update", (req, res) => {
-  res.render("update");
+app.get("/update", async (req, res) => {
+  const connection = await mysql.createConnection({
+    host: process.env.MYSQL_HOST,
+    database: process.env.MYSQL_DATABASE,
+    user: process.env.MYSQL_USER,
+    password: process.env.MYSQL_PASSWORD,
+  });
+  const id = req.query.id;
+  const sql = "SELECT * FROM drinks WHERE id = ?";
+  const result = await connection.execute(sql, [id]);
+  await connection.end();
+  res.render("update", { drink: result[0][0] });
+});
+
+app.post("/update", async (req, res) => {
+  const errors = {
+    id: [],
+    name: [],
+    price: [],
+    temp: [],
+  };
+  if (!req.body.id) {
+    errors.name.push("商品idは必須です。");
+  }
+  if (req.body.name.length > MAX_NAME_LENGTH) {
+    errors.name.push("商品名は20文字以内です。");
+  }
+  if (req.body.price >= MAX_PRICE || req.body.price <= MIN_PRICE) {
+    errors.price.push("価格は999円以内で設定できます。");
+  }
+  if (req.body.temp !== TEMP_WARM && req.body.temp !== TEMP_COLD) {
+    errors.temp.push("温度の選択肢が不正です。");
+  }
+  if (errors.name.length || errors.price.length || errors.temp.length) {
+    return res.render("add", { errors: errors });
+  }
+  const connection = await mysql.createConnection({
+    host: process.env.MYSQL_HOST,
+    database: process.env.MYSQL_DATABASE,
+    user: process.env.MYSQL_USER,
+    password: process.env.MYSQL_PASSWORD,
+  });
+  const sql = `UPDATE drinks SET name=?,price=?,temperature=? WHERE id = ?`;
+  await connection.query(sql, [
+    req.body.name,
+    req.body.price,
+    req.body.temp,
+    req.body.id,
+  ]);
+  await connection.end();
+  res.redirect("/");
 });
 
 app.listen(port, () => {

@@ -12,17 +12,30 @@
     </header>
 
     <main>
-      <form action="#" method="POST">
+      <form action="/update" method="POST">
+        <input type="hidden" name="id" value="<%= drink.id %>">
         <label for="drink-name">商品名:</label>
-        <input type="text" id="drink-name" name="name" required />
+        <input
+          type="text"
+          id="drink-name"
+          name="name"
+          required
+          value="<%= drink.name %>"
+        />
 
         <label for="drink-price">価格:</label>
-        <input type="number" id="drink-price" name="price" required />
+        <input
+          type="number"
+          id="drink-price"
+          name="price"
+          required
+          value="<%= drink.price %>"
+        />
 
         <label for="drink-temp">温度:</label>
         <select id="drink-temp" name="temp">
-          <option value="1">あたたかい</option>
-          <option value="0">冷たい</option>
+          <option <%= drink.temperature === 1 ? 'selected' : '' %> value="1">あたたかい</option>
+          <option <%= drink.temperature === 0 ? 'selected' : '' %> value="0">冷たい</option>
         </select>
 
         <button type="submit">更新する</button>
