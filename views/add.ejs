@@ -19,12 +19,16 @@
 
         <label for="drink-price">価格:</label>
         <input type="number" id="drink-price" name="price" required />
+        <p style="color: red">
+          <%= errors.price.length ? errors.price[0] :"" %>
+        </p>
 
         <label for="drink-temp">温度:</label>
         <select id="drink-temp" name="temp">
           <option value="1">あたたかい</option>
           <option value="0">冷たい</option>
         </select>
+        <p style="color: red"><%= errors.temp.length ? errors.temp[0] :"" %></p>
 
         <button type="submit">追加する</button>
       </form>
