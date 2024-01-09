@@ -21,7 +21,9 @@
         <% drinks.forEach((drink)=>{ %>
         <li class="product">
           <h2 class="product-name">
-            <a class="product-link" href="#"><%= drink.name %></a>
+            <a class="product-link" href="/update?id=<%= drink.id %>"
+              ><%= drink.name %></a
+            >
           </h2>
           <p class="product-price">¥<%= drink.price %></p>
           <p
