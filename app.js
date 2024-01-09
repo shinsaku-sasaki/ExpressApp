@@ -83,7 +83,7 @@ app.get("/update", async (req, res) => {
   res.render("update", { drink: result[0][0] });
 });
 
-app.post("/update", (req, res) => {
+app.post("/update", async (req, res) => {
   const errors = {
     id: [],
     name: [],
@@ -105,6 +105,20 @@ app.post("/update", (req, res) => {
   if (errors.name.length || errors.price.length || errors.temp.length) {
     return res.render("add", { errors: errors });
   }
+  const connection = await mysql.createConnection({
+    host: process.env.MYSQL_HOST,
+    database: process.env.MYSQL_DATABASE,
+    user: process.env.MYSQL_USER,
+    password: process.env.MYSQL_PASSWORD,
+  });
+  const sql = `UPDATE drinks SET name=?,price=?,temperature=? WHERE id = ?`;
+  await connection.query(sql, [
+    req.body.name,
+    req.body.price,
+    req.body.temp,
+    req.body.id,
+  ]);
+  await connection.end();
   res.redirect("/");
 });
 
