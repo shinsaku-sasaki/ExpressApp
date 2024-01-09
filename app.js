@@ -17,6 +17,7 @@ app.get("/", async (req, res) => {
   });
   const sql = "SELECT * FROM drinks";
   const result = await connection.execute(sql);
+  await connection.end();
   res.render("index", { drinks: result[0] });
 });
 
