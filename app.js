@@ -63,9 +63,9 @@ app.post("/add", async (req, res) => {
     user: process.env.MYSQL_USER,
     password: process.env.MYSQL_PASSWORD,
   });
-  const sql = `INSERT INTO drinks (name,price,temperature) VALUES(name,${req.body.name}),(price,${req.body.price}),(temperature,${req.body.temp})`;
-  await connection.query(sql);
-  connection.end();
+  const sql = `INSERT INTO drinks (name,price,temperature) VALUES(?,?,?)`;
+  await connection.query(sql, [req.body.name, req.body.price, req.body.temp]);
+  await connection.end();
   res.redirect("/");
 });
 
