@@ -4,6 +4,20 @@
     <meta charset="UTF-8" />
     <title>自動販売機アプリ</title>
     <link rel="stylesheet" href="styles.css" />
+    <script>
+      async function handleClickBuy(id) {
+        await fetch("/buy", {
+          method: "delete",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            id,
+          }),
+        });
+        window.location.reload();
+      }
+    </script>
   </head>
   <body>
     <header>
@@ -31,7 +45,7 @@
           >
             <%= drink.temperature ? "あたたかい" :"つめたい" %>
           </p>
-          <button>購入</button>
+          <button onclick="handleClickBuy('<%= drink.id  %>')">購入</button>
         </li>
         <% }) %>
       </ul>

@@ -16,6 +16,7 @@ app.set("view engine", "ejs");
 app.use(express.static("public"));
 
 app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
 
 app.get("/", async (req, res) => {
   const connection = await mysql.createConnection({
@@ -120,6 +121,22 @@ app.post("/update", async (req, res) => {
   ]);
   await connection.end();
   res.redirect("/");
+});
+
+app.delete("/buy", async (req, res) => {
+  if (!req.body.id) {
+    return;
+  }
+  const connection = await mysql.createConnection({
+    host: process.env.MYSQL_HOST,
+    database: process.env.MYSQL_DATABASE,
+    user: process.env.MYSQL_USER,
+    password: process.env.MYSQL_PASSWORD,
+  });
+  const sql = "DELETE FROM drinks WHERE id = ?";
+  await connection.query(sql, [req.body.id]);
+  await connection.end();
+  res.send("OK");
 });
 
 app.listen(port, () => {
